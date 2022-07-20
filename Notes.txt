@@ -19,6 +19,8 @@
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
+      Switches may be used to pre-configure a project at creation:
+        (ie. "ng new lets-get-lunch --routing --style=css")
 
     Services:
       Injectables that are usually "providedIn" the root
@@ -39,6 +41,11 @@
       Called once
       Called AFTER the component is constructed
       Invoked with: "implements OnInit" in the class declaration
+
+    Bootstrap:
+      Install with: "npm i bootstrap@3.3.7 --save"
+      Install requisite jQuery too: "npm i jquery --save"
+      Add references to both items in the "angular.json" file
 
     Best Practices:
       1.  Constructors should only be used for dependancy injection
