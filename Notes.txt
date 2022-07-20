@@ -1,0 +1,45 @@
+
+    Notes:
+    ------
+
+    Technologies Used:
+        1.  MongoDB
+        2.  NodeJS (for the API)
+        3.  Angular
+        4.  Postman
+        5.  Robo 3T (GUI for Data Viewing)
+        6.  Git
+        7.  NPM
+        8.  NVM (node version manager)
+
+    Installation:
+        Install NVM from:
+            https://github.com/coreybutler/nvm-windows/releases
+            Note:   Must use shell in "administrator" mode
+        
+    CLI:
+      Create a new serice with the CLI (ie. "ng g s services/ng-features")
+
+    Services:
+      Injectables that are usually "providedIn" the root
+      Usually injected into other modules via the constructor
+
+    Directives:
+      2 types:
+        Angular -     Begin with "@" and appear in markup (part of framework)
+        Structural -  Affect the DOM's structure
+                      Appear in markup preceded with "*" symbol
+        Attribute -   Affect element's behavior and appearance
+
+    Pipes:
+      Data formatters that also appear in the markup following a pipe symbol
+
+    ngOnInit:
+      This is a LIFECYCLE HOOK
+      Called once
+      Called AFTER the component is constructed
+      Invoked with: "implements OnInit" in the class declaration
+
+    Best Practices:
+      1.  Constructors should only be used for dependancy injection
+      2.  
