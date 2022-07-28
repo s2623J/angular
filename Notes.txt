@@ -13,19 +13,42 @@
         8.  NVM (node version manager)
 
     Installation:
-        Install NVM from:
-            https://github.com/coreybutler/nvm-windows/releases
-            Note:   Must use shell in "administrator" mode
+      Install NVM from:
+        https://github.com/coreybutler/nvm-windows/releases
+        Note:   Must use shell in "administrator" mode
+      Install MongoDB Community Edition at (version 3.2.22):
+        https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#get-mongodb-community-edition
+
+    Dev Setup:
+      mkdir C:\data\db
+      Powershell "nvm list" and "nvm use 16.16.0"
+      Nav to: C:\Repos\angular11\book-code\lets-get-lunch> ng serve -o
+      Nav to: C:\Repos\angular11\book-code\lets-get-lunch-documentation> npm start
+      (cd "C:\Program Files\MongoDB\Server\6.0\bin") & (.\mongod --dbpath="c:\data\db") (Requires "administrator" mode)
+      Nav to: C:\Repos\angular11\book-code\lets-get-lunch-api> npm run api-dev
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
       Switches may be used to pre-configure a project at creation:
         (ie. "ng new lets-get-lunch --routing --style=css")
+      The "-d" switch is for "dry-run". It generates stuff in a hypothetical 
+        way, so that it can be verified as something that the developer 
+        really wants to do.
+
+    MongoDB:
+      Nav to: C:\Program Files\MongoDB\Server\6.0\bin> .\mongod
 
     Services:
       Injectables that are usually "providedIn" the root
       Usually injected into other modules via the constructor
 
+    Interfaces:
+      Are auto-generated without testing files (ie. ng g i services/auth/user)
+
+    API:
+      Let's Get Lunch API Documentation:
+        http://192.168.1.214:9966/#lets-get-lunch-api
+      
     Directives:
       2 types:
         Angular -     Begin with "@" and appear in markup (part of framework)
@@ -47,6 +70,33 @@
       Install requisite jQuery too: "npm i jquery --save"
       Add references to both items in the "angular.json" file
 
+    Testing:
+      Karma is made by Angular Team and runs Unit Tests in 
+        a "Headless" browser (no UI) (ie. "ng test")
+      Jasmine runs Behavior Tests inside "Test Suites" that begin with "describe"
+        Each suite contains "Specs" to be tested & begin with "it"
+        Each Spec contains an expectation that begins with "expect"
+        Each expect statement should precede a "matcher" function (ie. "toEqual()")
+      Cypress runs Integrations Tests, or End-2-End Tests
+      Common Mistakes:
+        Unit Tests should only test expected values - NOT implementations (ie. E2E)
+      TDD:
+        Writing a failing test FIRST. Then writing code that will make the test pass
+      HttpClient:
+        Has two modules created specifically for testing:
+          1.  HttpClientTestingModule
+          2.  HttpTestingController
+      "f" Prefix:
+        When added, will save time by only executing the suite that it is applied to
+          (ie. "fdescribe")
+      flush(): 
+        Resolve the request by returning a mocked body of data plus additional HTTP 
+          information (such as response headers) if provided.
+      verify():
+        Verifies that the "HttpTestingController" module has no outstanding calls yet 
+          to complete
+      
     Best Practices:
       1.  Constructors should only be used for dependancy injection
-      2.  
+      2.  Use RxJS "Observables" whenever possible for the added functionality
+      3.  When testing services, begin with setting inputs, outputs, AND output types 
