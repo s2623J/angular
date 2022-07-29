@@ -65,10 +65,28 @@
       Called AFTER the component is constructed
       Invoked with: "implements OnInit" in the class declaration
 
+    Feature Modules:
+      Used for LAZY LOADING modules 
+      3 modules created with 2 commands:
+        ng g m modules/signup --routing 
+        ng g c components/signup 
+      Book Example (pg. 113):
+        app-routing.module.ts "Lazy Loads" reference to
+        signup.module.ts which then references BOTH 
+        signup-routing.module.ts AND signup.component.ts 
+        signup-routing.module.ts acts as a router of components 
+          for signup.module.ts
+      Route.loadChildren (pg. 112): 
+        Part of a path route in "app-routing.modules.ts". It is 
+        an object that configures lazy-loaded child routes.
+      
     Bootstrap:
       Install with: "npm i bootstrap@3.3.7 --save"
       Install requisite jQuery too: "npm i jquery --save"
       Add references to both items in the "angular.json" file
+
+    [()] syntax (also known as 'banana-in-a-box syntax'):
+      The value in the UI always syncs back to the domain model in your class.
 
     Testing:
       Karma is made by Angular Team and runs Unit Tests in 
