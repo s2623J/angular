@@ -24,7 +24,7 @@
       Powershell "nvm list" and "nvm use 16.16.0"
       Nav to: C:\Repos\angular11\book-code\lets-get-lunch> ng serve -o
       Nav to: C:\Repos\angular11\book-code\lets-get-lunch-documentation> npm start
-      (cd "C:\Program Files\MongoDB\Server\6.0\bin") & (.\mongod --dbpath="c:\data\db") (Requires "administrator" mode)
+      (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db") (Requires "administrator" mode)
       Nav to: C:\Repos\angular11\book-code\lets-get-lunch-api> npm run api-dev
         
     CLI:
@@ -88,6 +88,11 @@
     [()] syntax (also known as 'banana-in-a-box syntax'):
       The value in the UI always syncs back to the domain model in your class.
 
+    RxJS:
+      map - Applies a given function to each element emitted by the source 
+        Observable and emits the resulting values as an Observable. Used with 
+        pipe which is an instance method of Observable.
+
     Testing:
       Karma is made by Angular Team and runs Unit Tests in 
         a "Headless" browser (no UI) (ie. "ng test")
@@ -110,7 +115,7 @@
       flush(): 
         Resolve the request by returning a mocked body of data plus additional HTTP 
           information (such as response headers) if provided.
-      verify():
+      http.verify():
         Verifies that the "HttpTestingController" module has no outstanding calls yet 
           to complete
       
