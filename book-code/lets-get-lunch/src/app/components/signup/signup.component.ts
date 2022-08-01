@@ -34,7 +34,6 @@ export class SignupComponent implements OnInit {
   signup(credentials: User) {
     credentials.dietPreferences = this.getSelectedPreferences();
     this.authService.signup(credentials).subscribe((res) => {
-      console.log('res: ', res);
     }, err => {
       this.errorMessage = err.error.message;
     });

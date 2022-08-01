@@ -89,7 +89,7 @@
       The value in the UI always syncs back to the domain model in your class.
 
     RxJS:
-      map - Applies a given function to each element emitted by the source 
+      map - An operator that applies a given function to each element emitted by the source 
         Observable and emits the resulting values as an Observable. Used with 
         pipe which is an instance method of Observable.
 
@@ -109,7 +109,7 @@
         Has two modules created specifically for testing:
           1.  HttpClientTestingModule
           2.  HttpTestingController
-      "f" Prefix:
+      "f" Prefix (in testing):
         When added, will save time by only executing the suite that it is applied to
           (ie. "fdescribe")
       flush(): 
@@ -119,6 +119,9 @@
         Verifies that the "HttpTestingController" module has no outstanding calls yet 
           to complete
       
+    Definitions:
+      Flattening - Restructure hierachical data into non-hierachical list/array
+
     Best Practices:
       1.  Constructors should only be used for dependancy injection
       2.  Use RxJS "Observables" whenever possible for the added functionality
