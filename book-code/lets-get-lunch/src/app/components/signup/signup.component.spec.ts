@@ -1,27 +1,131 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { SignupModule } from 'src/app/modules/signup/signup.module';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { SignupComponent } from './signup.component';
+import { User } from '../../services/auth/user';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { Observable, throwError } from 'rxjs';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { } from 'jasmine'; // Removes type conflicts with unit tests
+
+class SignupPage {
+  submitBtn!: DebugElement;
+  usernameInput!: HTMLInputElement;
+  passwordInput!: HTMLInputElement;
+  dietPreference!: DebugElement[];
+
+  addPageElements() {
+    this.submitBtn = fixture.debugElement.query(By.css('button'));
+    this.usernameInput = fixture
+      .debugElement
+      .query(By.css('[name=username]'))
+      .nativeElement;
+    this.passwordInput = fixture
+      .debugElement
+      .query(By.css('[name=password]'))
+      .nativeElement;
+    this.dietPreference = fixture
+      .debugElement
+      .queryAll(By.css('[name=preference]'));
+  }
+}
+
+class MockAuthService {
+  signup(credentials: User) {}
+}
+
+class MockRouter {
+  navigate(path: string) {}
+}
+
+let component: SignupComponent;
+let fixture: ComponentFixture<SignupComponent>;
+let signupPage: SignupPage;
+let authService: AuthService;
+let router: Router;
 
 describe('SignupComponent', () => {
-  let component: SignupComponent;
-  let fixture: ComponentFixture<SignupComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, FormsModule],
+      imports: [SignupModule, HttpClientModule, FormsModule],
       declarations: [ SignupComponent ]
     })
-    .compileComponents();
+    .overrideComponent(SignupComponent, {
+      set: {
+        providers: [{
+          provide: AuthService, 
+          useClass: MockAuthService
+        },{
+          provide: Router, 
+          useClass: MockRouter
+        }]
+      }
+    }).compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(async() => {
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
+    signupPage = new SignupPage();
+    authService = fixture.debugElement.injector.get(AuthService);
+    router = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();
+    return fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      signupPage.addPageElements();
+    });
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should create a user with valid credentials and diet preferences', () => {
+    signupPage.usernameInput.value = 'johndoe';
+    signupPage.passwordInput.value = 'password';
+    signupPage.usernameInput.dispatchEvent(new Event('input'));
+    signupPage.passwordInput.dispatchEvent(new Event('input'));
+    signupPage.dietPreference[0].nativeElement.click();
+    signupPage.dietPreference[1].nativeElement.click();
+
+    spyOn(authService, 'signup').and.callFake(() => {
+      return of({ token: 's3cr3tt0ken' });
+    });
+    spyOn(router, 'navigate'); // Satisfies "expect" requirement for there to be a spy response
+    signupPage.submitBtn.nativeElement.click();
+
+    expect(authService.signup).toHaveBeenCalledWith({
+      username: 'johndoe',
+      password: 'password',
+      dietPreferences: ['BBQ', 'Burger']
+    });
+    
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
+
+  it('should display an error message with invalid credentials', () => {
+    signupPage.usernameInput.value = 'myUser';
+    signupPage.passwordInput.value = 'pswd';
+    signupPage.usernameInput.dispatchEvent(new Event('input'));
+    signupPage.passwordInput.dispatchEvent(new Event('input'));
+
+    spyOn(authService, 'signup').and.callFake(() => {
+      return throwError({
+        error: {
+          message: 'Your password must be at least 5 characters long.',
+        }
+      });
+    });
+    
+    signupPage.submitBtn.nativeElement.click();
+
+    fixture.detectChanges();
+    const errorMessage: DebugElement = fixture.debugElement.query(By.css('.alert'));
+    expect(errorMessage.nativeElement.textContent)
+      .toBe('Your password must be at least 5 characters long.');
   });
 });

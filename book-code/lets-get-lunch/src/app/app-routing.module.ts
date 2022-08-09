@@ -6,7 +6,12 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'signup',
-    loadChildren: () => import('./modules/signup/signup.module').then(m => m.SignupModule)
+    loadChildren: () => import('./modules/signup/signup.module')
+      .then(m => m.SignupModule)
+  },{
+    path: 'dashboard',
+    loadChildren: () => import('./modules/dashboard/dashboard.module')
+      .then(m => m.DashboardModule)
   }
 ];
 

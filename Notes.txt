@@ -18,14 +18,18 @@
         Note:   Must use shell in "administrator" mode
       Install MongoDB Community Edition at (version 3.2.22):
         https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#get-mongodb-community-edition
+      Cypress: ng add @cypress/schematic
 
     Dev Setup:
       mkdir C:\data\db
       Powershell "nvm list" and "nvm use 16.16.0"
-      Nav to: C:\Repos\angular11\book-code\lets-get-lunch> ng serve -o
+      Nav to: (cd "C:\Repos\angular11\book-code\lets-get-lunch") (ng serve -o)
       Nav to: C:\Repos\angular11\book-code\lets-get-lunch-documentation> npm start
-      (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db") (Requires "administrator" mode)
-      Nav to: C:\Repos\angular11\book-code\lets-get-lunch-api> npm run api-dev
+      Nav to: (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db")
+      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-dev)
+      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (ng test)
+      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && ("npx cypress open")
+      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-test)
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
@@ -100,7 +104,9 @@
         Each suite contains "Specs" to be tested & begin with "it"
         Each Spec contains an expectation that begins with "expect"
         Each expect statement should precede a "matcher" function (ie. "toEqual()")
-      Cypress runs Integrations Tests, or End-2-End Tests
+      Cypress:
+        Runs Integrations Tests, or End-2-End Tests
+        To skip specific pages in a directory, change the first "describe" to "describe.skip"
       Common Mistakes:
         Unit Tests should only test expected values - NOT implementations (ie. E2E)
       TDD:
@@ -124,5 +130,5 @@
 
     Best Practices:
       1.  Constructors should only be used for dependancy injection
-      2.  Use RxJS "Observables" whenever possible for the added functionality
+      2.  Use RxJS "Observables" whenever possible for added functionality
       3.  When testing services, begin with setting inputs, outputs, AND output types 
