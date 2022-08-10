@@ -5,6 +5,10 @@ import {
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
+import { JwtModule } from '@auth0/angular-jwt';
+import { tokenGetter } from 'src/app/app.module';
+import { } from 'jasmine'; // Removes type conflicts with unit tests
+
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -12,7 +16,14 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: tokenGetter
+          }
+        })
+      ],
     });
     service = TestBed.inject(AuthService);
     http = TestBed.inject(HttpTestingController);
@@ -140,5 +151,17 @@ describe('AuthService', () => {
       expect(localStorage.getItem('Authorization')).toEqual('s3cr3ttOken');
       http.verify();
     });
+  });
+
+  describe('isLoggedIn', () => {
+    it('should return true if the user is logged in', () => {
+      localStorage.setItem('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE5MTIxNzY4NTY3MzV9.2LxoVtRmowCeUiXUS0bMkMt5pT-FTB3VY3DSmUXwH7Y");
+      expect(service.isLoggedIn()).toEqual(true);
+    })
+
+    it('should return false if the user is NOT logged in', () => {
+      localStorage.removeItem('Authorization');
+      expect(service.isLoggedIn()).toEqual(false);
+    })
   });
 });

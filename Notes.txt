@@ -19,6 +19,8 @@
       Install MongoDB Community Edition at (version 3.2.22):
         https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#get-mongodb-community-edition
       Cypress: ng add @cypress/schematic
+        Add (below)to tsconfig.json to prevent type conflicts btw Cypress/Jest & TypeScript
+        "exclude": ["./cypress.config.ts"],
 
     Dev Setup:
       mkdir C:\data\db
@@ -28,7 +30,7 @@
       Nav to: (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db")
       Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-dev)
       Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (ng test)
-      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && ("npx cypress open")
+      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (npx cypress open)
       Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-test)
         
     CLI:
