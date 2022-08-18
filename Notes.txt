@@ -20,18 +20,19 @@
         https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#get-mongodb-community-edition
       Cypress: ng add @cypress/schematic
         Add (below)to tsconfig.json to prevent type conflicts btw Cypress/Jest & TypeScript
-        "exclude": ["./cypress.config.ts"],
+          "exclude": ["./cypress.config.ts"],
+        Unremark line in e2e.ts:
+          import './commands';
 
     Dev Setup:
       mkdir C:\data\db
       Powershell "nvm list" and "nvm use 16.16.0"
       Nav to: (cd "C:\Repos\angular11\book-code\lets-get-lunch") (ng serve -o)
-      Nav to: C:\Repos\angular11\book-code\lets-get-lunch-documentation> npm start
+      Nav to: (cd "C:\Repos\angular11\book-code\lets-get-lunch-documentation") (npm start)
       Nav to: (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db")
-      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-dev)
+      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-dev) || (npm run api-test)
       Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (ng test)
       Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (npx cypress open)
-      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-test)
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
@@ -126,6 +127,8 @@
       http.verify():
         Verifies that the "HttpTestingController" module has no outstanding calls yet 
           to complete
+      Services are fetched from the injector:
+        (ie. authService = fixture.debugElement.injector.get(AuthService);)
       
     Definitions:
       Flattening - Restructure hierachical data into non-hierachical list/array
@@ -134,3 +137,8 @@
       1.  Constructors should only be used for dependancy injection
       2.  Use RxJS "Observables" whenever possible for added functionality
       3.  When testing services, begin with setting inputs, outputs, AND output types 
+      4.  Multiple beforeEach blocks - If first block contains an "async" process (ie. 
+            testbed.compileComponents()), then an additional/seperate "beforeEach" 
+            block may be required to make sure processes are executed AFTER first 
+            block is completed.
+      5.  

@@ -23,8 +23,10 @@
       "dom"
     ],
   },
+  ////////////////////////// Important ///////////////////////////////////
   // Added (below) to prevent type conflicts btw Cypress/Jest & TypeScript
-  "exclude": ["./cypress.config.ts"], 
+  ////////////////////////////////////////////////////////////////////////
+  // "exclude": ["./cypress.config.ts"], 
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JwtModule } from "@auth0/angular-jwt";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 export function tokenGetter() {
   return localStorage.getItem('Authorization');
@@ -16,7 +17,8 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

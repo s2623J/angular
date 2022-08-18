@@ -9,7 +9,6 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from 'src/app/app.module';
 import { } from 'jasmine'; // Removes type conflicts with unit tests
 
-
 describe('AuthService', () => {
   let service: AuthService;
   let http: HttpTestingController;
@@ -143,12 +142,15 @@ describe('AuthService', () => {
         response = res;
       });
 
+      spyOn(service.loggedIn, 'emit');
+
       // Similar to Postman, using an "http" service to return a mocked
       // "loginResponse"
       http.expectOne('http://localhost:8080/api/sessions').flush(loginResponse);
 
       expect(response).toEqual(loginResponse);
       expect(localStorage.getItem('Authorization')).toEqual('s3cr3ttOken');
+      expect(service.loggedIn.emit).toHaveBeenCalled();
       http.verify();
     });
   });
@@ -164,4 +166,15 @@ describe('AuthService', () => {
       expect(service.isLoggedIn()).toEqual(false);
     })
   });
+
+  describe('logout', () => {
+    it('should clear the token from local storage', () => {
+      spyOn(service.loggedIn, 'emit');
+      localStorage.setItem('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE5MTIxNzY4NTY3MzV9.2LxoVtRmowCeUiXUS0bMkMt5pT-FTB3VY3DSmUXwH7Y');
+      expect(localStorage.getItem('Authorization')).toEqual('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE5MTIxNzY4NTY3MzV9.2LxoVtRmowCeUiXUS0bMkMt5pT-FTB3VY3DSmUXwH7Y');
+      service.logout();
+      expect(localStorage.getItem('Authorization')).toBeFalsy();
+      expect(service.loggedIn.emit).toHaveBeenCalledOnceWith(false);
+    })
+  })
 });
