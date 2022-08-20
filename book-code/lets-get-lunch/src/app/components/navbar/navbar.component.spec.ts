@@ -23,8 +23,7 @@ describe('NavbarComponent', () => {
       imports: [RouterTestingModule],
       declarations: [ NavbarComponent ],
       providers: [
-        { provide: AuthService, useClass:  MockAuthService },
-        // { provide: Router, useClass: RouterStub }
+        { provide: AuthService, useClass:  MockAuthService }
       ]
     })
     .compileComponents();
@@ -33,7 +32,6 @@ describe('NavbarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
     authService = fixture.debugElement.injector.get(AuthService);
     router = fixture.debugElement.injector.get(Router);
   });
@@ -63,12 +61,32 @@ describe('NavbarComponent', () => {
       let link = fixture.debugElement.query(By.css('[data-test="logout"]'));
       expect(link.nativeElement.innerText = 'Logout')
     })
-
-    it('should navigate to the home page when logout is clicked', () => {
-      spyOn(router, 'navigate');
-      component.logout();
-      expect(authService.logout).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledOnceWith(['/']);
-    })
   })
+
+  describe('with a user who is not logged in', () => {
+    beforeEach(() => {
+      spyOn(authService, 'isLoggedIn').and.callFake(() => {return false});
+      fixture.detectChanges();
+    });
+
+    it('should initialize to see if a user is logged in', () => {
+      expect(authService.isLoggedIn).toHaveBeenCalled();
+      expect(component.isLoggedIn).toEqual(false);
+    });
+
+    it('should have a link to the homepage when clicking the brand name', () => {
+      let link = fixture.debugElement.query(By.css('.navbar-brand'));
+      expect(link.attributes['routerLink']).toEqual('');
+    });
+
+    it('should have a link to signup visible', () => {
+      let link = fixture.debugElement.query(By.css('[data-test=signup]'));
+      expect(link.nativeElement.innerText).toBe('Signup')
+    });
+
+    it('should have a link to login visible', () => {
+      let link = fixture.debugElement.query(By.css('[data-test=login'))
+      expect(link.nativeElement.innerText).toBe('Login');
+    });
+  });
 });

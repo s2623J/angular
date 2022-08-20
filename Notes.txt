@@ -86,6 +86,8 @@
       Route.loadChildren (pg. 112): 
         Part of a path route in "app-routing.modules.ts". It is 
         an object that configures lazy-loaded child routes.
+      Example (make sure to use "--routing" Switches):
+        app-routing.module.ts >> login-routing.module.ts >> login.module.ts >> login.component.ts
       
     Bootstrap:
       Install with: "npm i bootstrap@3.3.7 --save"
@@ -131,7 +133,16 @@
         (ie. authService = fixture.debugElement.injector.get(AuthService);)
       
     Definitions:
-      Flattening - Restructure hierachical data into non-hierachical list/array
+      Flattening:   Restructure hierachical data into non-hierachical list/array
+      Imports:      Makes the exported declarations of other modules available in the 
+                    current module
+      Declarations: Are to make directives (including components and pipes) from the 
+                    current module available to other directives in the current module. 
+                    Selectors of directives, components or pipes are only matched 
+                    against the HTML if they are declared or imported.
+      Providers:    Are to make services and values known to DI (dependency injection). 
+                    They are added to the root scope and they are injected to other 
+                    services or directives that have them as dependency.
 
     Best Practices:
       1.  Constructors should only be used for dependancy injection
@@ -141,4 +152,4 @@
             testbed.compileComponents()), then an additional/seperate "beforeEach" 
             block may be required to make sure processes are executed AFTER first 
             block is completed.
-      5.  
+      5.  Use "fixture.detectChanges()" to trigger change detection.

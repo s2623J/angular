@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginModule } from './modules/login/login.module';
 
 export function tokenGetter() {
   return localStorage.getItem('Authorization');
@@ -19,11 +20,12 @@ export function tokenGetter() {
     HomeComponent,
     DashboardComponent,
     NavbarComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    LoginModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
