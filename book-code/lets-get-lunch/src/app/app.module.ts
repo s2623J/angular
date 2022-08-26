@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,6 +10,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModule } from './modules/login/login.module';
+import { EventCreateComponent } from './components/event-create/event-create.component';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 
 export function tokenGetter() {
   return localStorage.getItem('Authorization');
@@ -19,7 +21,8 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    EventCreateComponent
     ],
   imports: [
     BrowserModule,
@@ -33,7 +36,13 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

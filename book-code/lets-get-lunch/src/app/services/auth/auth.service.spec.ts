@@ -5,13 +5,14 @@ import {
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from 'src/app/app.module';
 import { } from 'jasmine'; // Removes type conflicts with unit tests
 
 describe('AuthService', () => {
   let service: AuthService;
   let http: HttpTestingController;
+  let jwtHelper: JwtHelperService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,9 +24,14 @@ describe('AuthService', () => {
           }
         })
       ],
+      providers: [
+        AuthService,
+        JwtHelperService
+      ]
     });
     service = TestBed.inject(AuthService);
     http = TestBed.inject(HttpTestingController);
+    jwtHelper = TestBed.inject(JwtHelperService);
   });
 
   it('should be created', () => {
@@ -175,6 +181,25 @@ describe('AuthService', () => {
       service.logout();
       expect(localStorage.getItem('Authorization')).toBeFalsy();
       expect(service.loggedIn.emit).toHaveBeenCalledOnceWith(false);
+    })
+  })
+
+  describe('currentUser', () => {
+    it('should return a user object with a valid token', () => {
+      spyOn(localStorage, 'getItem').and.callFake(() => {
+        return 'fakeToken';
+      });
+      spyOn(jwtHelper, 'decodeToken').and.returnValue({
+        exp: 1517847480,
+        iat: 1517840280,
+        username: 'username',
+        _id: '5a6f41c94000495518d2673f'
+      });
+      const res = service.currentUser();
+
+      expect(localStorage.getItem).toHaveBeenCalled();
+      expect(res.username).toBeDefined();
+      expect(res._id).toBeDefined();
     })
   })
 });

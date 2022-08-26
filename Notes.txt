@@ -123,6 +123,9 @@
       "f" Prefix (in testing):
         When added, will save time by only executing the suite that it is applied to
           (ie. "fdescribe")
+      "x" Prefix (in testing):
+        When added, will save time by excluding the suite that it is applied to
+          (ie. "xdescribe")
       flush(): 
         Resolve the request by returning a mocked body of data plus additional HTTP 
           information (such as response headers) if provided.
@@ -131,6 +134,8 @@
           to complete
       Services are fetched from the injector:
         (ie. authService = fixture.debugElement.injector.get(AuthService);)
+      Equivalent:
+        TestBed.inject() and TestBed.get()
       
     Definitions:
       Flattening:   Restructure hierachical data into non-hierachical list/array
