@@ -1,49 +1,47 @@
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { User } from './user';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import { LocalStorageService } from 'ngx-webstorage';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
-@Injectable({
-  providedIn: 'root',
-})
+import { User } from './user';
+
+@Injectable()
 export class AuthService {
   @Output() loggedIn: EventEmitter<boolean>;
+  jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+  constructor(private http: HttpClient, private localStorage: LocalStorageService) {
     this.loggedIn = new EventEmitter();
   }
 
   signup(credentials: User): Observable<object> {
-    return this.http
-      .post('http://localhost:8080/api/users', credentials)
-      .pipe(mergeMap(() => this.login(credentials)));
+    return this.http.post('http://localhost:8080/api/users', credentials)
+      .mergeMap(res => this.login(credentials));
   }
 
   login(credentials: User): Observable<object> {
-    return this.http
-      .post('http://localhost:8080/api/sessions', credentials)
-      .pipe(
-        map((res: any) => {
-          localStorage.setItem('Authorization', res.token);
-          this.loggedIn.emit(true);
-          return res;
-        })
-      );
-  }
-
-  isLoggedIn(): boolean {
-    return !this.jwtHelper.isTokenExpired();
+    return this.http.post('http://localhost:8080/api/sessions', credentials)
+      .map((res: any) => {
+        this.localStorage.store('Authorization', res.token);
+        this.loggedIn.emit(true);
+        return res;
+      });
   }
 
   logout() {
-    localStorage.removeItem('Authorization');
+    this.localStorage.clear('Authorization');
     this.loggedIn.emit(false);
   }
 
-  currentUser() {
-    let token = localStorage.getItem('Authorization');
-    return (token == null) ? undefined : this.jwtHelper.decodeToken(token);
+  isLoggedIn() {
+    return tokenNotExpired('ng2-webstorage|authorization');
   }
+
+  currentUser() {
+    return this.jwtHelper.decodeToken(this.localStorage.retrieve('Authorization'));
+  }
+
 }

@@ -1,42 +1,43 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { Ng2Webstorage } from 'ngx-webstorage';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { JwtModule } from "@auth0/angular-jwt";
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginModule } from './modules/login/login.module';
-import { EventCreateComponent } from './components/event-create/event-create.component';
+import { AuthService } from './services/auth/auth.service';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 
-export function tokenGetter() {
-  return localStorage.getItem('Authorization');
-}
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { NavbarComponent } from './navbar/navbar.component';
+
+import { environment } from '../environments/environment';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DashboardComponent,
-    NavbarComponent,
-    EventCreateComponent
-    ],
+    NavbarComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    LoginModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter
-      }
+    Ng2Webstorage,
+    BrowserAnimationsModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMaps,
+      libraries: ['places']
     })
   ],
   providers: [
+    AuthService,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,

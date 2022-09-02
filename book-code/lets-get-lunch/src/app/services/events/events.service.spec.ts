@@ -1,29 +1,29 @@
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { Event } from "./event";
+
+import { Event } from './event';
 import { EventsService } from './events.service';
 
 describe('EventsService', () => {
-  let service: EventsService;
+  let eventsService: EventsService;
   let http: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
+      imports: [HttpClientTestingModule],
+      providers: [EventsService]
     });
-    service = TestBed.inject(EventsService);
-    http = TestBed.inject(HttpTestingController);
+
+    eventsService = TestBed.get(EventsService);
+    http = TestBed.get(HttpTestingController);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(eventsService).toBeTruthy();
   });
 
   describe('create', () => {
     it('should return an event object with valid event details', () => {
-      // Constants below are set by API Swagger
       const event: Event = {
         '_creator': '5a550ea739fbc4ca3ee0ce58',
         'title': 'My first event',
@@ -49,23 +49,21 @@ describe('EventsService', () => {
           '5a550ea739fbc4ca3ee0ce58'
         ]
       };
+      let response;
 
-      let response: any;
-
-      service.create(event).subscribe(res => {
+      eventsService.create(event).subscribe(res => {
         response = res;
-      })
+      });
 
       http
         .expectOne('http://localhost:8080/api/events')
         .flush(eventResponse);
-
       expect(response).toEqual(eventResponse);
       http.verify();
-    })
+    });
 
     it('should return a 500 with invalid event details', () => {
-      const event: any = {
+      const event: Event = {
         '_creator': undefined,
         'title': undefined,
         'city': undefined,
@@ -74,25 +72,18 @@ describe('EventsService', () => {
         'endTime': undefined,
         'suggestLocations': undefined
       };
-      const eventResponse = 'Event could not be created!';
-      let errorResponse: any;
+      const eventResponse = 'Event could not be created!' ;
+      let errorResponse;
 
-      service.create(event).subscribe(res => {}, error => {
-        errorResponse = error;
-      })
+      eventsService.create(event).subscribe(res => {}, err => {
+        errorResponse = err;
+      });
 
       http
         .expectOne('http://localhost:8080/api/events')
-        .flush(
-          { message: eventResponse }, 
-          { 
-            status: 500, 
-            statusText: 'Server Error'
-          }
-        );
+        .flush({message: eventResponse}, {status: 500, statusText: 'Servor Error'});
       expect(errorResponse.error.message).toEqual(eventResponse);
       http.verify();
-    })
-  })
+    });
+  });
 });
-

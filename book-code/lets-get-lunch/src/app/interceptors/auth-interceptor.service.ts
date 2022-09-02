@@ -1,25 +1,25 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { LocalStorageService } from 'ngx-webstorage';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private localStorage: LocalStorageService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('Authorization');
+  intercept(req, next): Observable<HttpEvent<any>> {
+    const token = this.localStorage.retrieve('Authorization');
 
-    if (!!token) {
+    if (token) {
       req = req.clone({
         setHeaders: {
           Authorization: token
         }
-      })
+      });
     }
 
     return next.handle(req);
   }
+
 }

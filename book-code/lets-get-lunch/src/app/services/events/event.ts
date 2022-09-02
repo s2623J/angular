@@ -1,5 +1,5 @@
 export interface Event {
-  _creator?: string;
+  _creator: string;
   title: string;
   description?: string;
   city: string;

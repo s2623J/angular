@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Event } from "./event";
+import { HttpClient } from '@angular/common/http';
+import { Event } from './event';
+import { Observable } from 'rxjs/Observable';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EventsService {
 
   constructor(private http: HttpClient) { }
@@ -13,4 +11,5 @@ export class EventsService {
   create(event: Event): Observable<Event> {
     return this.http.post<Event>('http://localhost:8080/api/events', event);
   }
+
 }

@@ -1,35 +1,17 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  {
-    path: 'signup',
-    loadChildren: () =>
-      import('./modules/signup/signup.module').then((m) => m.SignupModule),
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () =>
-      import('./modules/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
-  },
-  {
-    path: 'login',
-    loadChildren: () =>
-      import('./modules/login/login.module').then((m) => m.LoginModule),
-  },
-  {
-    path: 'event',
-    loadChildren: () =>
-      import('./modules/event/event.module').then((m) => m.EventModule),
-  },
+  { path: 'signup', loadChildren: 'app/signup/signup.module#SignupModule' },
+  { path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule' },
+  { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
+  { path: 'event', loadChildren: 'app/event/event.module#EventModule' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
