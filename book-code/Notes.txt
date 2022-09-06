@@ -27,12 +27,12 @@
     Dev Setup:
       mkdir C:\data\db
       Powershell "nvm list" and "nvm use 16.16.0"
-      Nav to: (cd "C:\Repos\angular11\book-code\lets-get-lunch") (ng serve -o)
-      Nav to: (cd "C:\Repos\angular11\book-code\lets-get-lunch-documentation") (npm start)
+      Nav to: (cd "C:\Repos\angular\book-code\lets-get-lunch") (ng serve -o)
+      Nav to: (cd "C:\Repos\angular\book-code\lets-get-lunch-documentation") (npm start)
       Nav to: (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db")
-      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch-api") && (npm run api-dev) || (npm run api-test)
-      Test: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (ng test)
-      Test E2E: (cd "C:\Repos\angular11\book-code\lets-get-lunch") && (npx cypress open)
+      Test: (cd "C:\Repos\angular\book-code\lets-get-lunch-api") && (npm run api-dev) || (npm run api-test)
+      Test: (cd "C:\Repos\angular\book-code\lets-get-lunch") && (ng test)
+      Test E2E: (cd "C:\Repos\angular\book-code\lets-get-lunch") && (npx cypress open)
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
@@ -98,9 +98,7 @@
       The value in the UI always syncs back to the domain model in your class.
 
     RxJS:
-      map - An operator that applies a given function to each element emitted by the source 
-        Observable and emits the resulting values as an Observable. Used with 
-        pipe which is an instance method of Observable.
+      map - Like a JS map() function, but with Observable data
 
     Testing:
       Karma is made by Angular Team and runs Unit Tests in 
