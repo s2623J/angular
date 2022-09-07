@@ -1,3 +1,5 @@
+/// <reference types="Cypress" />
+
 describe('Event Create', () => {
   before(() => {
     Cypress.config('baseUrl', 'http://localhost:4200');

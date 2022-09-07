@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  googleMaps: 'AIzaSyC0vhsgGvPaqiE5yXjRFJu01dPc5z75vIg'
+  googleMaps: 'AIzaSyC29I1VY83oyApZnDwhRGIF3aW7IXEY1jc'
 };
