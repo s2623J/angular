@@ -10,6 +10,6 @@
     "target": "es5",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
-    "types": ["cypress", "node"]
+    "types": ["node", "jest"]
   }
 }

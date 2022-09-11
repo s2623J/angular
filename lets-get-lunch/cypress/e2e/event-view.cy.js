@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 describe('Event View', () => {
   before(() => {
     Cypress.config('baseUrl', 'http://localhost:4200');

@@ -16,6 +16,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { NavbarComponent } from './navbar/navbar.component';
 
 import { environment } from '../environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule ,
     AppRoutingModule,
     HttpClientModule,
     Ng2Webstorage,

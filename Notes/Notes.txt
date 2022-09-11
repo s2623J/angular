@@ -27,12 +27,12 @@
     Dev Setup:
       mkdir C:\data\db
       Powershell "nvm list" and "nvm use 16.16.0"
-      Nav to: (cd "C:\Repos\angular\book-code\lets-get-lunch") (ng serve -o)
-      Nav to: (cd "C:\Repos\angular\book-code\lets-get-lunch-documentation") (npm start)
-      Nav to: (cd "C:\Program Files\MongoDB\Server\3.2\bin") & (.\mongod --dbpath="c:\data\db")
-      Test: (cd "C:\Repos\angular\book-code\lets-get-lunch-api") && (npm run api-dev) || (npm run api-test)
-      Test: (cd "C:\Repos\angular\book-code\lets-get-lunch") && (ng test)
-      Test E2E: (cd "C:\Repos\angular\book-code\lets-get-lunch") && (npx cypress open)
+      Nav to: cd lets-get-lunch | ng serve -o
+      Nav to: cd lets-get-lunch-documentation | npm start
+      Nav to: cd "C:\Program Files\MongoDB\Server\3.2\bin" | .\mongod --dbpath="c:\data\db"
+      Test: cd lets-get-lunch-api | npm run api-dev || npm run api-test
+      Test: cd lets-get-lunch | ng test
+      Test E2E: cd lets-get-lunch | npx cypress open
         
     CLI:
       Create a new serice with the CLI (ie. "ng g s services/ng-features")
@@ -65,6 +65,11 @@
 
     Pipes:
       Data formatters that also appear in the markup following a pipe symbol
+
+    Input Properties:
+      Allows for passing a value from one component to another. Example(eventId):
+        <app-comment-create *ngIf="eventId" [eventId]="eventId">
+        </app-comment-create>
 
     ngOnInit:
       This is a LIFECYCLE HOOK

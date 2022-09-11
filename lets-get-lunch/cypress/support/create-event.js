@@ -6,7 +6,7 @@ Cypress.Commands.add("createEvent", (name, location, opts = {}) => {
     .click()
     .url()
     .should("include", "/event")
-    .should("not.be.visible")
+    // .should("not.be.visible")
     .get("input[formControlName=title]")
     .type(name)
     .get("input[formControlName=description")
@@ -43,5 +43,5 @@ Cypress.Commands.add("createEvent", (name, location, opts = {}) => {
     .get(".cancel")
     .click()
     .url()
-    .should("include", "/dashboard");
+    .should("include", "/dashboard")
 });

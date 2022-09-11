@@ -62,12 +62,12 @@ describe('EventViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
 
-  it('should initialize with a call to get the event details using' + 
-    ' the active route id', () => {
-    expect(eventService.get).toHaveBeenCalledWith(event._id);
-  })
+  // it('should initialize with a call to get the event details using' + 
+  //   ' the active route id', () => {
+  //   expect(eventService.get).toHaveBeenCalledWith(event._id);
+  // })
 });
