@@ -30,11 +30,19 @@ describe('Navbar', () => {
       cy.signup();
     });
 
+    it('should show a link to show all events', () => {
+      cy
+        .get('[data-test=events]')
+        .should('be.visible')
+        .should('have.text', 'Events').click()
+        .url().should('contain', '/events')
+    })
+
     it('should show a link to logout', () => {
       cy
         .get('[data-test=logout]')
-          .should('have.text', 'Logout')
-          .click().url().should('include', '/');
+        .should('have.text', 'Logout')
+        .click().url().should('include', '/');
     });
 
     it('should redirect to the dashboard when the navbar brand is clicked', () => {

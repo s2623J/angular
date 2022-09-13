@@ -94,6 +94,11 @@ describe('NavbarComponent', () => {
       expect(link.attributes.routerLink).toEqual('/signup');
     });
 
+    it('should have a link to view all events', async() => {
+      const link = fixture.debugElement.query(By.css('[data-test=events]'))
+      expect(link.attributes.routerLink).toEqual('/events')
+    })
+
     it('should have a link to login visible', () => {
       const link = fixture.debugElement.query(By.css('[data-test=login]'));
       expect(link.attributes.routerLink).toEqual('/login');

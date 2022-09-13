@@ -11,6 +11,7 @@ import { AuthService } from "../services/auth/auth.service";
 import { EventsService } from "../services/events/events.service";
 import { Event } from "../services/events/event";
 import { Router } from "@angular/router";
+import { detectChanges } from "@angular/core/src/render3";
 
 const currentUser = {
   username: "myUser",
@@ -33,9 +34,9 @@ const events: Array<Event> = [
   },
 ];
 
-class MockRouter {
-  navigate(path) {}
-}
+// class MockRouter {
+//   navigate(path) {}
+// }
 
 class MockAuthService {
   currentUser = jasmine
@@ -64,16 +65,16 @@ describe("DashboardComponent", () => {
       imports: [
         DashboardModule,
         RouterTestingModule.withRoutes([
-          { path: "event", redirectTo: "/event" },
-        ]),
-      ],
+          { path: 'event', redirectTo: '/event' }
+        ])
+      ]
     })
     .overrideComponent(DashboardComponent, {
       set: {
         providers: [
           { provide: AuthService, useClass: MockAuthService },
           { provide: EventsService, useClass: MockEventsService },
-          { provide: Router, useClass: MockRouter }
+          // { provide: Router, useClass: MockRouter }
         ],
       },
     })
@@ -99,8 +100,7 @@ describe("DashboardComponent", () => {
       calendarEventElement = fixture.debugElement.queryAll(
         By.css(".cal-event")
       );
-      eventLink = fixture.debugElement.queryAll(
-        By.css('.cal-event-title'));
+      eventLink = fixture.debugElement.queryAll(By.css('a.cal-event-title'));
     });
   });
 
@@ -125,10 +125,18 @@ describe("DashboardComponent", () => {
   });
 
   it("should display events within the current week in the calendar", () => {
-    expect(calendarEventElement[0].nativeElement.textContent).toContain(
-      "My first event"
-    );
-  });
+    expect(calendarEventElement[0].nativeElement.textContent)
+      .toContain("My first event")
+  })
+
+  xit('should navigate to the event view when an event is clicked', () => {
+    spyOn(router, 'navigate');
+    // fixture.detectChanges();
+    let x = eventLink[0].nativeElement;
+    // expect(router.navigate).toHaveBeenCalled();
+    expect(router.navigate)
+      .toHaveBeenCalledWith(['/event/5a55135639fbc4ca3ee0ce5a']);
+  })
 
   describe("addJSDate", () => {
     it('should add a "start" and "end" property to an event', () => {
@@ -143,11 +151,5 @@ describe("DashboardComponent", () => {
       const result = component.addEventColors(events);
       expect(result[0].color).toBeDefined();
     })
-  })
-
-  xit('should navigate to the event view when an event is clicked', () => {
-    spyOn(router, 'navigate');
-    eventLink[0].nativeElement.click();
-    expect(router.navigate).toHaveBeenCalledWith('/event/' + '5a55135639fbc4ca3ee0ce5a');
   })
 })

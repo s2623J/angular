@@ -54,5 +54,4 @@ export class DashboardComponent implements OnInit {
   eventClicked(event) {
     this.router.navigate(['/event/' + event._id]);
   }
-
 }
