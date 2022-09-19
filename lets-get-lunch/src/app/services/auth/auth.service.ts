@@ -43,5 +43,4 @@ export class AuthService {
   currentUser() {
     return this.jwtHelper.decodeToken(this.localStorage.retrieve('Authorization'));
   }
-
 }

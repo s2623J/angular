@@ -3,8 +3,7 @@
     "allowJs": true,
     "types": [
       "cypress",
-      "jasmine",
-      "node"
+      "jest"
     ]
   },
   "include": ["**/*.*"]

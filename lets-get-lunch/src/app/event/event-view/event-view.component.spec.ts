@@ -47,10 +47,54 @@ describe('EventViewComponent', () => {
     .overrideComponent(EventViewComponent, {
       set: {
         providers: [
-          { provide: EventsService, useClass: MockEventsService },
-          { provide: ActivatedRoute, useClass: MockActivatedRoute }
+          { provide: ActivatedRoute, useClass: MockActivatedRoute },
+          { provide: EventsService, useClass: MockEventsService }
         ],
-      },
+        template: `
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8">
+                <div *ngIf="event">
+                  <h3 class="event-name">{{event.title}}</h3>
+                  <div *ngIf="event.description">
+                    <label>Description:</label>
+                    <span class="description"> {{event.description}}</span>
+                  </div>
+                  <div>
+                    <label>Location:</label>
+                    <span class="location"> {{event.city}}, {{event.state}}</span>
+                  </div>
+                  <div>
+                    <label>Start:</label>
+                    <span class="start"> {{event.displayStart}}</span>
+                  </div>
+                  <div>
+                    <label>End:</label>
+                    <span class="end"> {{event.displayEnd}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <!--<app-member-list *ngIf="event"
+                                     [eventId]="eventId"
+                                     [creatorId]="event._creator"
+                                     [members]="event.members">
+                </app-member-list>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <!--<app-comment-create *ngIf="eventId"
+                                        [eventId]="eventId">
+                </app-comment-create>-->
+              </div>
+              <div class="col-md-4">
+                <!--recommendations-list-->
+              </div>
+            </div>
+          </div>
+        `
+      }
     })
     .compileComponents();
   });
@@ -62,12 +106,12 @@ describe('EventViewComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  // it('should initialize with a call to get the event details using' + 
-  //   ' the active route id', () => {
-  //   expect(eventService.get).toHaveBeenCalledWith(event._id);
-  // })
+  it('should initialize with a call to get the event details using' + 
+    ' the active route id', () => {
+    expect(eventService.get).toHaveBeenCalledWith(event._id);
+  })
 });
