@@ -116,7 +116,7 @@ describe('MemberListComponent', () => {
     })
   })
 
-  fdescribe('viewed by a non-event creator', () => {
+  describe('viewed by a non-event creator', () => {
     beforeEach(() => {
       spyOn(authService, 'currentUser').and.callFake(() => nonEventCreator);
       spyOn(eventsService, 'isEventCreator').and.callFake(() => false);
