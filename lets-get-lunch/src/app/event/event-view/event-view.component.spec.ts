@@ -5,6 +5,8 @@ import { EventsService } from '../../services/events/events.service';
 import { EventModule } from '../event.module';
 import { Event } from "../../services/events/event";
 import { EventViewComponent } from './event-view.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 const event: Event = {
   '_id': '5a55135639fbc4ca3ee0ce5a',
@@ -33,16 +35,21 @@ class MockActivatedRoute {
 
 class MockEventsService {
   get = jasmine.createSpy('get').and.callFake(() => Observable.of(event));
+
+  isEventCreator() {}
 }
 
 describe('EventViewComponent', () => {
   let component: EventViewComponent;
   let fixture: ComponentFixture<EventViewComponent>;
-  let eventService: EventsService;
+  let eventsService: EventsService;
 
   beforeEach(async() => {
     TestBed.configureTestingModule({
-      imports: [ EventModule ]
+      imports: [ 
+        EventModule,
+        RouterTestingModule 
+      ]
     })
     .overrideComponent(EventViewComponent, {
       set: {
@@ -52,29 +59,54 @@ describe('EventViewComponent', () => {
         ],
         template: `
           <div class="container">
-            <div class="row">
-              <div class="col-md-8">
-                <div *ngIf="event">
-                  <h3 class="event-name">{{event.title}}</h3>
-                  <div *ngIf="event.description"><label>Description:</label><span class="description"> {{event.description}}</span></div>
-                  <div><label>Location:</label><span class="location"> {{event.city}}, {{event.state}}</span></div>
-                  <div><label>Start:</label><span class="start"> {{event.displayStart}}</span></div>
-                  <div><label>End:</label><span class="end"> {{event.displayEnd}}</span></div>
+          <div class="row">
+            <div class="col-md-8">
+              <div *ngIf="event">
+                <h3 class="event-name">{{event.title}}</h3>
+                <a class="event-edit"
+                  *ngIf="isCreator"
+                  [routerLink]="['/event', eventId, 'update']">Edit</a>
+                <div *ngIf="event.description">
+                  <label>Description:</label>
+                  <span class="description"> {{event.description}}</span>
+                </div>
+                <div>
+                  <label>Location:</label>
+                  <span class="location"> {{event.city}}, {{event.state}}</span>
+                </div>
+                <div>
+                  <label>Start:</label>
+                  <span class="start"> {{event.displayStart}}</span>
+                </div>
+                <div>
+                  <label>End:</label>
+                  <span class="end"> {{event.displayEnd}}</span>
                 </div>
               </div>
-              <div class="col-md-4">
-                <!--<app-member-list *ngIf="event" [eventId]="eventId" [creatorId]="event._creator" [members]="event.members"></app-member-list>-->
-              </div>
             </div>
-            <div class="row">
-              <div class="col-md-8">
-                <!--<app-comment-create *ngIf="eventId" [eventId]="eventId"></app-comment-create>-->
-              </div>
-              <div class="col-md-4">
-                <!--<app-recommendations-list *ngIf="event" [eventId]="eventId" [suggestLocations]="event.suggestLocations"></app-recommendations-list>-->
-              </div>
+            <div class="col-md-4">
+              <!--<app-member-list *ngIf="event"
+                              [eventId]="eventId"
+                              [creatorId]="event._creator"
+                              [members]="event.members">
+              </app-member-list>-->
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-8">
+              <!--<app-comment-create *ngIf="eventId"
+                                  [eventId]="eventId">
+              </app-comment-create>-->
+            </div>
+            <div class="col-md-4">
+              <!--<app-recommendations-list
+                *ngIf="event"
+                [eventId]="eventId"
+                [suggestLocations]="event.suggestLocations">
+              </app-recommendations-list>-->
+            </div>
+          </div>
+        </div>
         `
       }
     })
@@ -84,7 +116,7 @@ describe('EventViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventViewComponent);
     component = fixture.componentInstance;
-    eventService = fixture.debugElement.injector.get(EventsService);
+    eventsService = fixture.debugElement.injector.get(EventsService);
     fixture.detectChanges();
   });
 
@@ -94,6 +126,25 @@ describe('EventViewComponent', () => {
 
   it('should initialize with a call to get the event details using' + 
     ' the active route id', () => {
-    expect(eventService.get).toHaveBeenCalledWith(event._id);
+    expect(eventsService.get).toHaveBeenCalledWith(event._id);
+  })
+
+  it('should contain a link to update the events if the current user' + 
+    ' is the current event creator', () => {
+    component.isCreator = true;
+    fixture.detectChanges();
+
+    const updateLinkAddress = fixture.debugElement.query(By.css('a.event-edit'))
+      .nativeElement.getAttribute('href')
+    expect(updateLinkAddress).toEqual('/event/5a55135639fbc4ca3ee0ce5a/update');
+  })
+
+  it('should hide a link to update the event if the current user is NOT' + 
+    'the current event creator', () => {
+    component.isCreator = false;
+    fixture.detectChanges();
+
+    const updateLinkAddress = fixture.debugElement.query(By.css('a.event-edit'))
+    expect(updateLinkAddress).toBeNull();
   })
 });

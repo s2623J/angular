@@ -100,7 +100,7 @@ describe("DashboardComponent", () => {
       calendarEventElement = fixture.debugElement.queryAll(
         By.css(".cal-event")
       );
-      eventLink = fixture.debugElement.queryAll(By.css('a.cal-event-title'));
+      eventLink = fixture.debugElement.queryAll(By.css('.cal-event-title'));
     });
   });
 
@@ -129,11 +129,12 @@ describe("DashboardComponent", () => {
       .toContain("My first event")
   })
 
-  xit('should navigate to the event view when an event is clicked', () => {
+  it('should navigate to the event view when an event is clicked', () => {
     spyOn(router, 'navigate');
-    // fixture.detectChanges();
-    let x = eventLink[0].nativeElement;
-    // expect(router.navigate).toHaveBeenCalled();
+    let x = fixture.debugElement.queryAll(By.css('.cal-event-title'))
+    x[0].nativeElement.click();
+    fixture.detectChanges();
+    
     expect(router.navigate)
       .toHaveBeenCalledWith(['/event/5a55135639fbc4ca3ee0ce5a']);
   })

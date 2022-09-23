@@ -74,5 +74,4 @@ export class EventCreateComponent implements OnInit {
       this.error = err.error.message;
     });
   }
-
 }

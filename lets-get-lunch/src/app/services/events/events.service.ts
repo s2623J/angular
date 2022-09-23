@@ -6,6 +6,7 @@ import "rxjs/add/operator/map";
 import { format } from "date-fns";
 import { AuthService } from "../auth/auth.service";
 import { Subscriber } from "rxjs";
+import { of } from "rxjs/observable/of";
 
 @Injectable()
 export class EventsService {
@@ -50,13 +51,19 @@ export class EventsService {
 
   /**
    * Returns an updated member list
-   * @param eventId
-   * @param subscriber
    */
   subscribe(eventId: string, subscriber: object): Observable<Event> {
     return this.http.patch<Event>(
       "http://localhost:8080/api/events/" + eventId + "/subscribe",
-      subscriber
-    );
+      subscriber);
+  }
+
+  /**
+   * Returns an updated event
+   */
+  // update(id: string, event:Event): Observable<Event> {
+  update(event:Event): Observable<Event> {
+    return this.http.patch<Event>(
+      "http://localhost:8080/api/events/" + event._id, event);
   }
 }

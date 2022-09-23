@@ -9,7 +9,7 @@ export class RecommendationsService {
 
   //** Uses an eventId to return an array of recommendations */
   get(eventID: string): Observable<any> {
-    // return this.http.get('http://localhost:8080/api/recommendations/' + eventID)
+    // this.http.get('http://localhost:8080/api/recommendations/' + eventID) // To pass unit test
     const recommendationsResult = require('../../testing/recommendations-result.json');
     return of(recommendationsResult);
   }

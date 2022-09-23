@@ -10,9 +10,11 @@ import { EventViewComponent } from './event-view/event-view.component';
 import { CommentCreateModule } from '../comment-create/comment-create.module';
 import { MemberListModule } from '../member-list/member-list.module';
 import { RecommendationsListModule } from '../recommendations-list/recommendations-list.module';
+import { EventUpdateComponent } from './event-update/event-update.component';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     EventRoutingModule,
     ReactiveFormsModule,
@@ -24,7 +26,8 @@ import { RecommendationsListModule } from '../recommendations-list/recommendatio
   ],
   declarations: [
     EventCreateComponent,
-    EventViewComponent
+    EventViewComponent,
+    EventUpdateComponent
   ],
   providers: [EventsService]
 })

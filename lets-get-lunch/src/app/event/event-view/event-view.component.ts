@@ -11,9 +11,10 @@ import { Event } from "../../services/events/event";
 export class EventViewComponent implements OnInit {
   event: Event;
   eventId: string;
+  isCreator: boolean;
 
   constructor(
-    private eventService: EventsService,
+    private eventsService: EventsService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -21,8 +22,9 @@ export class EventViewComponent implements OnInit {
     const params = this.activatedRoute.snapshot.params;
     this.eventId = params['id'];
     
-    this.eventService.get(this.eventId).subscribe(res => {
+    this.eventsService.get(this.eventId).subscribe(res => {
       this.event = res;
+      this.isCreator = this.eventsService.isEventCreator(this.event._creator);
     })
   }
 }

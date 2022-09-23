@@ -10,7 +10,6 @@ export class RecommendationsListComponent implements OnInit {
   @Input() eventId: string;
   @Input() suggestLocations: boolean;
   recommendations: Array<any>;
-  // recommendations: string;
   error: string;
 
   constructor(private recommendationsService: RecommendationsService) { }
@@ -22,9 +21,6 @@ export class RecommendationsListComponent implements OnInit {
   }
 
   getRecommendations() {
-    console.log('this.eventId: ', this.eventId);
-    console.log('this.suggestLocations: ', this.suggestLocations);
-    
     this.recommendationsService.get(this.eventId).subscribe(res => {
       if (res) {
         this.recommendations = res.restaurants;
