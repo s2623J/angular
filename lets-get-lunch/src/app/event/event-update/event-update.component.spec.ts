@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventUpdateComponent } from './event-update.component';
 
-xdescribe('EventUpdateComponent', () => {
+describe('EventUpdateComponent', () => {
   let component: EventUpdateComponent;
   let fixture: ComponentFixture<EventUpdateComponent>;
 
@@ -18,10 +18,4 @@ xdescribe('EventUpdateComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  
 });
