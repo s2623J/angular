@@ -35,7 +35,7 @@
       Test E2E: cd lets-get-lunch | npx cypress open
         
     CLI:
-      Create a new serice with the CLI (ie. "ng g s services/ng-features")
+      Create a new service with the CLI (ie. "ng g s services/ng-features")
       Switches may be used to pre-configure a project at creation:
         (ie. "ng new lets-get-lunch --routing --style=css")
       The "-d" switch is for "dry-run". It generates stuff in a hypothetical 
