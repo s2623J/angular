@@ -2,14 +2,13 @@
 This is an Event Scheduling App
 
 ## Prerequisites:
-Must be installed:
-| | a. Node |
-| | b. Mongo |
-| | c. Cypress |
-| | d. Node NVM (Node version 16.16.0) |
-| | e. Postman (helpful though not essential) |
-| | f. Angular CLI |
-
+Must be installed:<br>
+  a. Node<br>
+  b. Mongo<br>
+  c. Cypress<br>
+  d. Node NVM (Node version 16.16.0)<br>
+  e. Postman (helpful though not essential)<br>
+  f. Angular CLI<br>
 ##  Instructions:
 Start Mongo:<br>
   Console to:<br>
