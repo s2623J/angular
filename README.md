@@ -12,9 +12,9 @@ Must be installed:<br>
 ##  Instructions:
 ### Start Mongo:
 ##### Console to:
-    cd "C:\Program Files\MongoDB\Server\3.2\bin" (or, wherever your Mongo is)<br>
+    cd "C:\Program Files\MongoDB\Server\3.2\bin" (or, wherever your Mongo is)
 ##### Execute:
-    .\mongod --dbpath="c:\data\db"<br>
+    .\mongod --dbpath="c:\data\db"
 ### Start API Server:
 ##### Console to:
     cd lets-get-lunch-api
@@ -37,6 +37,6 @@ Must be installed:<br>
 ##### Console to:
     cd lets-get-lunch
 ##### Unit Testing:
-    ng test<br>
+    ng test
 ##### E2E Testing:
     npx cypress open
